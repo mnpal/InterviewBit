@@ -10,12 +10,14 @@ string Solution::largestNumber(const vector<int> &A)
 {
     int allZero = 1;
     vector<string> B;
+    
     for(int i=0;i<A.size();i++)
     {
         B.push_back(to_string(A[i]));
         if(A[i]!=0)
             allZero = 0;
     }
+    
     if(allZero)
         return "0";
     sort(B.begin(), B.end(), comp);
