@@ -1,3 +1,4 @@
+![alt text](https://dajh2p2mfq4ra.cloudfront.net/assets/header_logo_color-8d918751c3952f4b43dba8f398bd5a511072c71e9bd1473d474bdc124287e517.png.gz)
 
 # [InterviewBit](https://www.interviewbit.com/) Solutions
 
