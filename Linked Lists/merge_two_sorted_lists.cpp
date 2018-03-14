@@ -4,41 +4,58 @@
  * Definition for singly-linked list.
  * struct ListNode {
  *     int val;
- *     struct ListNode *next;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
  * };
- * 
- * typedef struct ListNode listnode;
- * 
- * listnode* listnode_new(int val) {
- *     listnode* node = (listnode *) malloc(sizeof(listnode));
- *     node->val = val;
- *     node->next = NULL;
- *     return node;
- * }
  */
-/**
- * @input A : Head pointer of linked list 
- * @input B : Head pointer of linked list 
- * 
- * @Output head pointer of list.
- */
-listnode* mergeTwoLists(listnode* A, listnode* B) {
-
-    listnode* result = NULL;
-    if(A==NULL)
+ListNode* Solution::mergeTwoLists(ListNode* A, ListNode* B) {
+    
+    ListNode* tA = A;
+    ListNode* tB = B;
+    
+    if(tA==NULL)
         return B;
-    else if(B==NULL)
+    if(tB==NULL)
         return A;
-    if(A->val <= B->val)
-    {
-        result = A;
-        result->next = mergeTwoLists(A->next, B);
+    
+    ListNode* head, *temp;
+    
+    if(tA->val < tB->val) {
+        head = tA;
+        tA = tA->next;
     }
-    else
-    {
-        result = B;
-        result->next = mergeTwoLists(A, B->next);
+    else {
+        head = tB;
+        tB = tB->next;
     }
-    return result;
+    temp = head;
+    while(tA!=NULL && tB!=NULL) {
+        if(tA->val < tB->val) {
+            temp->next = tA;
+            temp = tA;
+            tA = tA->next;
+        }
+        else {
+            temp->next = tB;
+            temp = tB;
+            tB = tB->next;
+        }
+    }
+    if(tB==NULL) {
+        while(tA!=NULL) {
+            temp->next = tA;
+            temp = tA;
+            tA = tA->next;
+        }
+    }
+    if(tA==NULL) {
+        while(tB!=NULL) {
+            temp->next = tB;
+            temp = tB;
+            tB = tB->next;
+        }
+    }
+    return head;
 }
+
 
