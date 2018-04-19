@@ -9,32 +9,52 @@
  *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
  * };
  */
-bool find(TreeNode* A, int val) {
+/**
+ * Definition for binary tree
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+ 
+
+bool find(TreeNode* A, int B) {
     if(!A)
         return false;
-    if(A->val==val)
-        return true;
-    if((A->left && find(A->left, val)) || (A->right && find(A->right, val)))
-        return true;
+    queue<TreeNode*> q;
+    q.push(A);
+    
+    while(!q.empty()) {
+        A = q.front();
+        q.pop();
+        if(A->val == B)
+            return true;
+        if(A->left)
+            q.push(A->left);
+        if(A->right)
+            q.push(A->right);
+    }
     return false;
 }
 TreeNode* LCA(TreeNode* A, int B, int C) {
-    if(!A)
+    if(!A || A->val==B || A->val==C)
         return A;
-    if(A->val==B || A->val==C)
+    TreeNode* left = LCA(A->left, B, C);
+    TreeNode* right = LCA(A->right, B, C);
+    
+    if(left && right)
         return A;
-    auto L = LCA(A->left, B, C);
-    auto R = LCA(A->right, B, C);
-    if(L&&R)
-        return A;
-    return (L?L:R);
+    return (left?left:right);
 }
+
 int Solution::lca(TreeNode* A, int B, int C) {
     
     if(!find(A, B) || !find(A, C))
         return -1;
         
-    auto ancestor = LCA(A, B, C);
+    TreeNode* ancestor = LCA(A, B, C);
     if(ancestor)
         return ancestor->val;
     return -1;
