@@ -8,42 +8,31 @@
  * };
  */
 vector<int> Solution::postorderTraversal(TreeNode* A) {
-    
-    vector<int> sol;
-    
     stack<TreeNode*> st;
+    vector<int> data;
+    if(!A)
+        return data;
+    st.push(A);
     
-    TreeNode* curr = A;
-    TreeNode* temp;
-    
-    do{
-        if(curr == NULL){
-            temp = st.top();
-            curr = temp->right;
-            if(curr == NULL){
-                sol.push_back(temp->val);
-                st.pop();
-                if(st.empty()){
-                    return sol;
-                }
-                curr = st.top();
-                while(curr->right == temp){
-                    temp = curr;
-                    sol.push_back(curr->val);
-                    st.pop();
-                    if(st.empty()){
-                        return sol;
-                    }
-                    curr = st.top();
-                }
-                curr = curr->right;    
-            }
+    TreeNode* prev = NULL;
+    while(!st.empty()) {
+        TreeNode* curr = st.top();
+        
+        if(!prev || prev->left==curr || prev->right==curr) {
+            if(curr->left)
+                st.push(curr->left);
+            else if(curr->right)
+                st.push(curr->right);
         }
-        else{
-            st.push(curr);
-            curr = curr->left;
+        else if(curr->left==prev) {
+            if(curr->right)
+                st.push(curr->right);
         }
-    }while(!st.empty());
-
-return sol;
+        else {
+            data.push_back(curr->val);
+            st.pop();
+        }
+        prev = curr;
+    }
+    return data;
 }
