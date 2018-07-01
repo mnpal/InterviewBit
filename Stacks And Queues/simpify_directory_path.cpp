@@ -36,3 +36,39 @@ string Solution::simplifyPath(string A) {
     return "/"+path;
 }
 
+####### OR ################3
+
+string Solution::simplifyPath(string A) {
+    stack<string> st;
+    
+    auto i=0;
+    while(i<A.size()) {
+        if(A[i]=='.' && A[i+1]=='.') {
+            if(!st.empty())
+                st.pop();
+        }
+        else if(A[i]=='.')
+            ;
+        else if(A[i]!='/') {
+            string pt = "";
+            while(A[i]!='/' && i<A.size()) {
+                pt += A[i];
+                i++;
+            }
+            st.push(pt);
+        }
+        i++;
+    }
+    
+    string path = "";
+    
+    while(!st.empty()) {
+        path = "/" + st.top() + path;
+        st.pop();
+    }
+    if(path.size()==0)
+        return "/";
+    return path;
+}
+
+
