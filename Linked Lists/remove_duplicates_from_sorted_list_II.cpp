@@ -57,3 +57,55 @@ ListNode* Solution::deleteDuplicates(ListNode* A) {
     return A;
 }
 
+
+
+########## OR ###################
+
+
+ListNode* Solution::deleteDuplicates(ListNode* A) {
+    if(!A || !A->next)
+        return A;
+    ListNode* n1, *n2, *temp, *h=NULL;
+    int cval;
+    n1 = A;
+    n2 = A->next;
+    
+    while(n2) {
+        if(n1->val==n2->val) {
+            cval = n1->val;
+            //cout << cval << endl;
+            while(n1->val==cval) {
+                temp = n1;
+                n1 = n1->next;
+                free(temp);
+                if(n1==NULL)
+                    break;
+            }
+            if(n1==NULL)  {
+                if(h) {
+                    h->next = n1;
+                    return A;
+                }
+                else
+                    return h;
+            }
+            else{
+                if(h)
+                    h->next = n1;
+                else
+                    A = n1;
+                if(n1->next)
+                    n2 = n1->next;
+                else
+                    return A;
+            }
+        }
+        else {
+            h = n1;
+            //cout << h->val << endl;
+            n1 = n2;
+            n2 = n2->next;
+        }    
+    }
+    return A;    
+}
