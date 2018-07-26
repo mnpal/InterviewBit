@@ -36,3 +36,4 @@ vector<int> Solution::postorderTraversal(TreeNode* A) {
     }
     return data;
 }
+`
