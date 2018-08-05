@@ -47,3 +47,30 @@ vector<vector<int> > Solution::combine(int A, int B) {
     sort(result.begin(), result.end());
     return result;
 }
+
+######## ANOTHER ONE ############3
+
+void generateSet(vector<int> N, int index, vector<int> &current, vector<vector<int> > &result, int k) {
+    if(index>=N.size()) {
+        if(current.size()==k)
+            result.push_back(current);
+        return;
+    }    
+    generateSet(N, index+1, current, result, k);
+    current.push_back(N[index]);
+    generateSet(N, index+1, current, result, k);
+    current.pop_back();
+}
+vector<vector<int> > Solution::combine(int A, int B) {
+    vector<vector<int> > result;
+    vector<int> current;
+    
+    vector<int> N;
+    for(auto i=1;i<=A;i++)
+        N.push_back(i);
+    
+    generateSet(N, 0, current, result, B);
+    sort(result.begin(), result.end());
+    return result;
+}
+
