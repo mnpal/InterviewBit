@@ -26,3 +26,24 @@ vector<vector<int> > Solution::anagrams(const vector<string> &A) {
     return ang_groups;
 }
 
+
+########## ANOTHER SOLUTION ############
+
+vector<vector<int> > Solution::anagrams(const vector<string> &A) {
+    unordered_map<string, vector<int> > mp;
+    for(int i=0;i<A.size();i++) {
+        string st = A[i];
+        sort(st.begin(), st.end());
+        if(mp.find(st)!=mp.end())
+            mp[st].push_back(i+1);
+        else
+            mp.insert(pair <string, vector<int> > (st, {i+1}));
+    }
+    
+    vector<vector<int> > result;
+    for(auto it=mp.begin();it!=mp.end();it++)
+        result.push_back(it->second);
+    sort(result.begin(), result.end());
+    return result;
+}
+
