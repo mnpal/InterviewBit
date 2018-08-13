@@ -1,29 +1,12 @@
 //  https://www.interviewbit.com/problems/tushars-birthday-party/
 
-bool comp(pair<int, int> a, pair<int, int> b) {
-    return a.first < b.first;
-}
+
 int Solution::solve(const vector<int> &A, const vector<int> &B, const vector<int> &C) {
     int max_cap = 0;
     for(auto a: A)
         max_cap = max(max_cap, a);
     int n = B.size();
     int m = max_cap;
-    //cout << max_cap << endl;
-    vector<int> wt;
-    vector<int> val;
-    vector<pair<int, int> > mp;
-    
-    for(int i=0;i<n;i++)
-        mp.push_back({B[i], C[i]});
-    
-    sort(mp.begin(), mp.end(), comp);
-    
-    for(auto d: mp) {
-        //cout << d.first << ": " << d.second << endl;
-        wt.push_back(d.first);
-        val.push_back(d.second);
-    }
     
     vector<vector<int> > T(n, vector<int> (m+1));
     
@@ -32,14 +15,14 @@ int Solution::solve(const vector<int> &A, const vector<int> &B, const vector<int
     }
     
     for(int i=0;i<n;i++) {
-
+ 
         for(int j=1;j<=m;j++) {
             if(i==0)
-                T[i][j] = j*val[i];
-            else if(j<wt[i])
+                T[i][j] = j*C[i];
+            else if(j<B[i])
                 T[i][j] = T[i-1][j];
             else {
-                T[i][j] = min(T[i-1][j], T[i][j-wt[i]]+val[i]);
+                T[i][j] = min(T[i-1][j], T[i][j-B[i]]+C[i]);
             }
         }
     }
@@ -50,4 +33,3 @@ int Solution::solve(const vector<int> &A, const vector<int> &B, const vector<int
         cost += T[n-1][a];
     return cost;
 }
-
