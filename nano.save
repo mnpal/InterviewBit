@@ -1,0 +1,14 @@
+#include <list>
+using namespace std;
+
+list<int> lst;
+map<int, int> mp;
+int sz;
+
+LRUCache::LRUCache(int capacity) {
+    sz = capacity;
+    mp.clear();
+    lst.clear();
+}
+
+
