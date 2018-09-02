@@ -10,52 +10,37 @@
  */
 ListNode* Solution::mergeTwoLists(ListNode* A, ListNode* B) {
     
-    ListNode* tA = A;
-    ListNode* tB = B;
-    
-    if(tA==NULL)
+    if(!A)  
         return B;
-    if(tB==NULL)
+    if(!B)
         return A;
-    
+        
     ListNode* head, *temp;
     
-    if(tA->val < tB->val) {
-        head = tA;
-        tA = tA->next;
-    }
-    else {
-        head = tB;
-        tB = tB->next;
-    }
-    temp = head;
-    while(tA!=NULL && tB!=NULL) {
-        if(tA->val < tB->val) {
-            temp->next = tA;
-            temp = tA;
-            tA = tA->next;
-        }
-        else {
-            temp->next = tB;
-            temp = tB;
-            tB = tB->next;
+    head = temp = NULL;
+    
+    while(A && B) {
+        if(A->val < B->val) {
+            if(temp)
+                temp->next = A;
+            temp = A;
+            A = A->next;
+            if(!head)
+                head = temp;
+        } else {
+            if(temp)
+                temp->next = B;
+            temp = B;
+            B = B->next;
+            if(!head)
+                head = temp;
         }
     }
-    if(tB==NULL) {
-        while(tA!=NULL) {
-            temp->next = tA;
-            temp = tA;
-            tA = tA->next;
-        }
-    }
-    if(tA==NULL) {
-        while(tB!=NULL) {
-            temp->next = tB;
-            temp = tB;
-            tB = tB->next;
-        }
-    }
+    
+    if(A)
+        temp->next = A;
+    else
+        temp->next = B;
     return head;
 }
-
 
