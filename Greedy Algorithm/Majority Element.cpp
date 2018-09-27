@@ -29,3 +29,26 @@ int Solution::majorityElement(const vector<int> &A) {
     return (count>n/2)?candidate:-1;
 }
 
+
+
+######### OR ############
+
+
+int Solution::majorityElement(const vector<int> &A) {
+    
+    int n = A.size();
+    int count = 0, candid;
+    
+    for(int i=0;i<n;i++) {
+        if(count==0) {
+            count++;
+            candid = A[i]; 
+        }
+        else if(candid==A[i])
+            count++;
+        else
+            count--;
+    }
+    return candid;
+}
+
