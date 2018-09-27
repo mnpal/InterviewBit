@@ -34,3 +34,29 @@ int Solution::canCompleteCircuit(const vector<int> &A, const vector<int> &B) {
     return -1;
 }
 
+
+########## OR #############
+
+int Solution::canCompleteCircuit(const vector<int> &gas, const vector<int> &cost) {
+    
+    int start = 0;
+    int n = gas.size();
+    
+    if(n==1)
+        return 0;
+    
+    while(start < n) {
+        int i = start;
+        int curr_gas = 0;
+        while(curr_gas+gas[i] > cost[i]) {
+            curr_gas += gas[i]-cost[i];
+            i++;
+            i = i%n;
+            if(i==start)
+                return start;
+        }
+        start++;
+    }
+    return -1;
+}
+
